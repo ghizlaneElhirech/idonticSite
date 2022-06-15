@@ -13,6 +13,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600&display=swap" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js" integrity="sha512-vBmx0N/uQOXznm/Nbkp7h0P1RfLSj0HQrFSzV8m7rOGyj30fYAOKHYvCNez+yM8IrfnW0TCodDEjRqf6fodf/Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     
     @include('layouts.head')
 </head> 
@@ -192,6 +193,23 @@
               <div class="row">
                 
                
+                <div class="col-xl-8 mb-30">
+                    <div class="card h-100">
+                        <div class="btn-group info-drop">
+                            <button type="button" class="dropdown-toggle-split text-muted" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false"><i class="ti-more"></i></button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#"><i class="text-primary ti-reload"></i>Refresh</a>
+                                <a class="dropdown-item" href="#"><i class="text-secondary ti-eye"></i>View
+                                    all</a>
+                            </div>
+                        </div>
+                         <div class="card-body" style="width: 100%">
+                      <canvas id="barChart"></canvas>
+
+                </div>
+                    </div>
+                </div>
             
                 
             </div>
@@ -218,3 +236,32 @@
 </body>
 
 </html>
+<script>
+    $(function(){
+        var datas = <?php echo json_encode($datas); ?>;
+        var barCanvas = $("#barChart");
+        var barChart = new Chart(barCanvas,{
+            type:'bar',
+            data:{
+                labels:['Jan','Fab','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                datasets:[
+                {
+                    label:' Visitors who  added their informations ',
+                    data:datas,
+                    backgroundColor:['lightpink','#FF1493','#DB7093','#C71585','#FF00FF','  #EE82EE','violet','purple','pink','#FFDAB9','#FFEFD5','#FFE4E1'],
+                    
+                }]
+            },
+            options:{
+                scales:{
+                    yAxis:[{
+                        ticks:{
+                            beginAtZero:true
+                        }
+                    }]
+                }
+            }
+        });
+        
+    })
+</script>
